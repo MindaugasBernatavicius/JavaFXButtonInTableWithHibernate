@@ -19,6 +19,12 @@
                         <PropertyValueFactory property="name"/>
                     </cellValueFactory>
                 </TableColumn>
+
+                <TableColumn text="Surname">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="surname"/>
+                    </cellValueFactory>
+                </TableColumn>
             </columns>
         </TableView>
     </children>

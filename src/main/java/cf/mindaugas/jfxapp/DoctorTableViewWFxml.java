@@ -1,6 +1,7 @@
-package cf.mindaugas;
+package cf.mindaugas.jfxapp;
 
-import cf.mindaugas.constroller.ScreenWithTableController;
+import cf.mindaugas.jfxapp.controller.DoctorController;
+import cf.mindaugas.jfxapp.model.Doctor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -17,7 +18,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.io.IOException;
 
-public class TableViewSampleWFxml extends Application {
+public class DoctorTableViewWFxml extends Application {
 
     static StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build(); // Create registry
     static MetadataSources sources = new MetadataSources(registry); // Create MetadataSources
@@ -28,12 +29,9 @@ public class TableViewSampleWFxml extends Application {
         // ... inject some data to make the application self sufficient
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Data d1 = new Data("Mindaugas");
-        Data d2 = new Data("Jonas");
-        Data d3 = new Data("Petras");
-        session.persist(d1);
-        session.persist(d2);
-        session.persist(d3);
+        session.persist(new Doctor("Mindaugas", "Bernatavičius"));
+        session.persist(new Doctor("Jonas", "Jonaitis"));
+        session.persist(new Doctor("Petras", "Petraitis"));
         transaction.commit();
         session.close();
 
@@ -46,8 +44,8 @@ public class TableViewSampleWFxml extends Application {
         stage.setWidth(600);
         stage.setHeight(300);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("..\\..\\view\\ScreenWithTable.fxml"));
-        fxmlLoader.setController(new ScreenWithTableController(sessionFactory.openSession()));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("..\\..\\..\\view\\ScreenWithTable.fxml"));
+        fxmlLoader.setController(new DoctorController(sessionFactory.openSession()));
         Pane p = fxmlLoader.load();
 
         Scene scene = new Scene(new Group(p));

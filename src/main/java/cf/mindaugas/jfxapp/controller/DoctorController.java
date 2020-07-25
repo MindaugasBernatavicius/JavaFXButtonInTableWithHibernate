@@ -1,6 +1,6 @@
-package cf.mindaugas.constroller;
+package cf.mindaugas.jfxapp.controller;
 
-import cf.mindaugas.Data;
+import cf.mindaugas.jfxapp.model.Doctor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,14 +19,14 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ScreenWithTableController implements Initializable {
+public class DoctorController implements Initializable {
 
     @FXML
-    public TableView<Data> table;
-    private ObservableList<Data> tvObservableList;
+    public TableView<Doctor> table;
+    private ObservableList<Doctor> tvObservableList;
     private Session session;
 
-    public ScreenWithTableController(Session session) {
+    public DoctorController(Session session) {
         // In a few words: The constructor is called first,
         // then any @FXML annotated fields are populated, then initialize() is called.
         // So the constructor does NOT have access to @FXML fields referring to components defined in the .fxml file,
@@ -46,7 +46,7 @@ public class ScreenWithTableController implements Initializable {
 
     private void fillTableObservableListWithSampleData() {
         Transaction transaction = session.beginTransaction();
-        String hql = "FROM Data";
+        String hql = "FROM Doctor";
         Query query = session.createQuery(hql);
         List results = query.list();
         tvObservableList.setAll(results);
@@ -56,21 +56,21 @@ public class ScreenWithTableController implements Initializable {
     }
 
     private void addButtonToTable() {
-        TableColumn<Data, Void> colBtn = new TableColumn("Button Column");
-        Callback<TableColumn<Data, Void>, TableCell<Data, Void>> cellFactory
-                = new Callback<TableColumn<Data, Void>, TableCell<Data, Void>>() {
+        TableColumn<Doctor, Void> colBtn = new TableColumn("Button Column");
+        Callback<TableColumn<Doctor, Void>, TableCell<Doctor, Void>> cellFactory
+                = new Callback<TableColumn<Doctor, Void>, TableCell<Doctor, Void>>() {
             @Override
-            public TableCell<Data, Void> call(final TableColumn<Data, Void> param) {
-                final TableCell<Data, Void> cell = new TableCell<Data, Void>() {
+            public TableCell<Doctor, Void> call(final TableColumn<Doctor, Void> param) {
+                final TableCell<Doctor, Void> cell = new TableCell<Doctor, Void>() {
                     private final Button btn = new Button("Delete item");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Data data = getTableView().getItems().get(getIndex());
-                            System.out.println("clicked on: " + data);
+                            Doctor doctor = getTableView().getItems().get(getIndex());
+                            System.out.println("clicked on: " + doctor);
                             Transaction transaction = session.beginTransaction();
-                            Data dataToDelete = session.load(Data.class, data.getId());
-                            session.delete(dataToDelete);
+                            Doctor doctorToDelete = session.load(Doctor.class, doctor.getId());
+                            session.delete(doctorToDelete);
                             transaction.commit();
                             // session.close();
                             fillTableObservableListWithSampleData();
