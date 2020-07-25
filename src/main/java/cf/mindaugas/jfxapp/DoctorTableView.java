@@ -3,12 +3,10 @@ package cf.mindaugas.jfxapp;
 import cf.mindaugas.jfxapp.model.Doctor;
 import cf.mindaugas.jfxapp.repository.DoctorRepository;
 import cf.mindaugas.jfxapp.service.DoctorSearchService;
-import com.sun.javafx.scene.control.InputField;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -38,14 +36,26 @@ public class DoctorTableView extends Application {
     private final TableView<Doctor> doctorTable = new TableView<>();
     private final ObservableList<Doctor> doctorList = FXCollections.observableArrayList();
     private final Label doctorCountLabel = new Label();
+    private Scene scene;
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public Scene getScene(){
+        return this.scene;
+    }
 
     public static void main(String[] args) {
+        addInitialData();
+        launch(args);
+    }
+
+    public static void addInitialData(){
         // ... inject some data to make the application self sufficient
         doctorRepository.create(new Doctor("Mindaugas", "Bernatavičius"));
         doctorRepository.create(new Doctor("Jonas", "Jonaitis"));
         doctorRepository.create(new Doctor("Petras", "Petraitis"));
-
-        launch(args);
     }
 
     @Override
@@ -71,19 +81,21 @@ public class DoctorTableView extends Application {
         doctorTable.getColumns().addAll(colId, colName, colSurname);
         addButtonToTable();
 
-        VBox root = new VBox();
-        HBox searchBar = new HBox();
-        HBox.setHgrow(searchField, Priority.ALWAYS);
+        VBox root = new VBox(); root.setId("id-root");
+        HBox searchBar = new HBox(); searchBar.setId("id-search-bar");
+        HBox.setHgrow(searchField, Priority.ALWAYS); searchField.setId("id-search-field");
         searchBar.getChildren().add(searchField);
+
         Button searchButton = new Button("Search");
-        searchButton.setOnAction(actionEvent -> {
-            doctorList.setAll(dss.findByName(searchField.getText()));
-        });
+        searchButton.setId("id-search-button");
+        searchButton.setOnAction(actionEvent ->
+                doctorList.setAll(dss.findByName(searchField.getText())));
         searchBar.getChildren().add(searchButton);
         root.getChildren().add(searchBar);
         root.getChildren().add(doctorTable);
         root.getChildren().add(doctorCountLabel);
-        Scene scene = new Scene(root);
+
+        scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
