@@ -19,6 +19,7 @@ public class DoctorSearchServiceTest {
     public void findByName__givenNameWhenOneExists__returnsOneDoctor() {
         // given
         DoctorRepository dr = mock(DoctorRepository.class);
+
         when(dr.getAll()).thenReturn(new ArrayList<Doctor>(){{
             add(new Doctor("Jonas", "Jonaitis"));
             add(new Doctor("Mindaugas", "Mindaugaitis"));
@@ -30,8 +31,12 @@ public class DoctorSearchServiceTest {
         // when
         List<Doctor> res = dss.findByName("Mindaugas");
 
+        // ... let's see what are all the doctors in the repository
+        // System.out.println(dss.findByName(""));
+
+
         // then
-        assertEquals(1, res.size(), "Only returns one result");
+        assertEquals(1, res.size(), "Only returns one doctor");
         assertEquals(new Doctor("Mindaugas", "Mindaugaitis"), res.get(0), "The result is Doctor Mindaugas");
     }
 }

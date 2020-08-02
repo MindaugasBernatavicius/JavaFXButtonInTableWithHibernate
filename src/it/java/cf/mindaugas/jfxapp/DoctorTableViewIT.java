@@ -33,7 +33,7 @@ public class DoctorTableViewIT {
         stage.show();
         stage.toFront();
         System.out.println("Is showing: "+ stage.isShowing());
-    }
+}
 
     @Stop // teardown, called with @After semantics
     private void stop() {
@@ -43,7 +43,7 @@ public class DoctorTableViewIT {
 
     @Test
     void givenDefaultParams_WhenApplicationLoaded_ThenSearchButtonIsPresent(FxRobot robot) {
-        Assertions.assertThat(robot.lookup("#id-search-button").queryButton()).hasText("Search");
+        Assertions.assertThat(robot.lookup("#id-search-button").queryButton()).hasText("Searchz");
     }
 
     @Test

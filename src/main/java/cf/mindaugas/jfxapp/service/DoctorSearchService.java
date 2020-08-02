@@ -10,6 +10,7 @@ public class DoctorSearchService {
 
     private DoctorRepository doctorRepository;
 
+    // dependency injection via constructor
     public DoctorSearchService(DoctorRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
     }
