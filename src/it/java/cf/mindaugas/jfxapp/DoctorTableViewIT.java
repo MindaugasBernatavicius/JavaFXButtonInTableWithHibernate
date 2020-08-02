@@ -55,7 +55,7 @@ public class DoctorTableViewIT {
         robot.clickOn("#id-search-button");
 
         // To get an idea of how it work, we can pause!
-        Thread.sleep(3000);
+        Thread.sleep(8000);
 
         // then
         // Assertions.assertThat().hasText("Search");

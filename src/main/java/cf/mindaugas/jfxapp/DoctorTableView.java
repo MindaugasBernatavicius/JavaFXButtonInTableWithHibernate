@@ -95,6 +95,18 @@ public class DoctorTableView extends Application {
         root.getChildren().add(doctorTable);
         root.getChildren().add(doctorCountLabel);
 
+        HBox newDoctorCreationArea = new HBox();
+        TextField newName = new TextField();
+        TextField newSurname = new TextField();
+        Button createNewButton = new Button("Create");
+        createNewButton.setOnAction(actionEvent -> {
+            doctorRepository.create(new Doctor(newName.getText(), newSurname.getText()));
+            doctorList.setAll(doctorRepository.getAll());
+        });
+
+        newDoctorCreationArea.getChildren().addAll(newName, newSurname, createNewButton);
+        root.getChildren().add(newDoctorCreationArea);
+
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -118,7 +130,6 @@ public class DoctorTableView extends Application {
             public TableCell<Doctor, Void> call(final TableColumn<Doctor, Void> param) {
                 final TableCell<Doctor, Void> cell = new TableCell<Doctor, Void>() {
                     private final Button btn = new Button("Delete item");
-
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Doctor doctor = getTableView().getItems().get(getIndex());

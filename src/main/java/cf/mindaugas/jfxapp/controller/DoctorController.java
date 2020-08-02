@@ -23,6 +23,7 @@ public class DoctorController implements Initializable {
 
     @FXML
     public TableView<Doctor> table;
+
     private ObservableList<Doctor> tvObservableList;
     private Session session;
 
